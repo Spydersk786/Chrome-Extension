@@ -17,11 +17,31 @@ function sendUrlLog(log) {
   }).catch(error => console.error('Error:', error));
 }
 
+function takeScreenshot() {
+  chrome.tabs.captureVisibleTab(null, { format: "png" }, (dataUrl) => {
+      if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError.message);
+          return;
+      }
+      sendToBackend(dataUrl);
+  });
+}
 
+function sendToBackend(dataUrl) {
+  fetch("http://localhost:5000/upload_screenshot", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ screenshot: dataUrl })
+  }).then(response => {
+    console.log("Screenshot sent to backend.");
+  }).catch(error => {
+    console.error("Error sending screenshot:", error);
+  });
+}
 
-
-
-
+setInterval(takeScreenshot, 6000);
 
 
 
