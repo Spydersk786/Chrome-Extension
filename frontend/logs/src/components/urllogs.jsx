@@ -24,7 +24,7 @@ const UrlLogs = () => {
         {logs.map((log, index) => (
           <li key={index}>
             <strong>URL:</strong> {log.url} <br />
-            <strong>Visited Times:</strong> {log.time.join(', ')}
+            <strong>Visited Times:</strong> {log.time.map((timestamp) => new Date(timestamp).toLocaleString()).join(', ')}
           </li>
         ))}
       </ul>
