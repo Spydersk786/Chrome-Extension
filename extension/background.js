@@ -29,7 +29,7 @@ function takeScreenshot() {
 }
 
 function sendToBackend(dataUrl,time) {
-  fetch("http://localhost:5000/upload_screenshot", {
+  fetch("http://localhost:5000/screenshots", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
