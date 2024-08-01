@@ -23,17 +23,18 @@ function takeScreenshot() {
           console.error(chrome.runtime.lastError.message);
           return;
       }
-      sendToBackend(dataUrl);
+      const time = new Date().toISOString();
+      sendToBackend(dataUrl,time);
   });
 }
 
-function sendToBackend(dataUrl) {
+function sendToBackend(dataUrl,time) {
   fetch("http://localhost:5000/upload_screenshot", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ screenshot: dataUrl })
+    body: JSON.stringify({ screenshot: dataUrl,time: time })
   }).then(response => {
     console.log("Screenshot sent to backend.");
   }).catch(error => {
