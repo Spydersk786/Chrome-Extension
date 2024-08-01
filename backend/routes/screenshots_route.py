@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 import base64
 from io import BytesIO
 from PIL import Image
@@ -13,7 +13,7 @@ from database import screenshots
 
 screenshots_bp = Blueprint('screenshots', __name__)
 
-@screenshots_bp.route('/upload_screenshot', methods=['POST'])
+@screenshots_bp.route('/screenshots', methods=['POST'])
 def upload_screenshot():
     # Get the screenshot data from the request
     data = request.json['screenshot']
@@ -35,3 +35,9 @@ def upload_screenshot():
     
     # Return the URL of the uploaded image
     return {"url": url}, 200
+
+@screenshots_bp.route('/screenshots', methods=['GET'])
+def get_screenshots():
+    # Retrieve all documents from the MongoDB collection
+    ss = list(screenshots.find({}, {"_id": 0})) 
+    return jsonify(ss), 200
