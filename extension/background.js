@@ -42,7 +42,7 @@ function sendToBackend(dataUrl,time) {
   });
 }
 
-setInterval(takeScreenshot, 6000);
+setInterval(takeScreenshot, 60000);
 
 
 
