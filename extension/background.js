@@ -44,6 +44,27 @@ function sendToBackend(dataUrl,time) {
 
 setInterval(takeScreenshot, 60000);
 
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'saveAudio') {
+    saveAudio(request.data);
+  }
+});
+
+function saveAudio(base64data) {
+  fetch('http://localhost:5000/audios', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ audio: base64data,time: new Date().toISOString() })
+  })
+  .then(response => response.json())
+  .then(data => console.log('Audio saved at:', data.filepath))
+  .catch(error => console.error('Error saving audio:', error));
+}
+
+
+
 
 
 

